@@ -19,10 +19,16 @@ public class GlobalEventHandler : MonoBehaviour {
 	private int stage;
 	private bool timing;
 
+	private float startPositionLeft;
+	private float startPositionRight;
+
 	void Start () {
 		playerOneScript = playerOne.GetComponent<Player> ();
 		playerTwoScript = playerTwo.GetComponent<Player> ();
 		UIScript = GameObject.FindGameObjectWithTag("UI").GetComponent<UI> ();
+
+		startPositionLeft = -24;
+		startPositionRight = 24;
 	}
 
 	void Update () {
@@ -44,6 +50,8 @@ public class GlobalEventHandler : MonoBehaviour {
 
 	private void StartStage () {
 		timing = true;
+		SetTransformX (playerOne);
+		SetTransformX (playerTwo);
 	}
 	
 	public void HandleClash () {
@@ -58,6 +66,8 @@ public class GlobalEventHandler : MonoBehaviour {
 
 		UIScript.IncreaseRounds (playerOneScript, playerTwoScript);
 		stage -= 1;
+
+		StartStage ();
 	}
 
 	private void HandleTimeout () {
@@ -69,4 +79,20 @@ public class GlobalEventHandler : MonoBehaviour {
 		return animatorCurrentState.normalizedTime % 1;
 	}
 
+	private void SetTransformX (GameObject player) {
+		Transform playerTransform = player.transform;
+		Vector3 position = playerTransform.position;
+
+		Movement movementScript = player.GetComponent<Movement> ();
+
+		if (movementScript.left) {
+			startPositionLeft += 4;
+			position.x = startPositionLeft;
+		} else {
+			startPositionRight -= 4;
+			position.x = startPositionRight;
+		}
+
+		player.transform.position = position;
+	}
 }

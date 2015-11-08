@@ -6,8 +6,6 @@ public class Movement : MonoBehaviour {
 	[SerializeField]
 	private float Speed;
 	[SerializeField]
-	private bool left;
-	[SerializeField]
 	private KeyCode movementKey;
 	[SerializeField]
 	private KeyCode attackKey;
@@ -17,6 +15,8 @@ public class Movement : MonoBehaviour {
 
 	private bool moving;
 	private bool attacking;
+
+	public bool left;
 
 	// Use this for initialization
 	void Start () {

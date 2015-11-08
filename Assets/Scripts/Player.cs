@@ -21,6 +21,8 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D enemy) {
+		if (enemy.gameObject.GetComponent<Player> () == null)
+			return;
 		Debug.Log ("trigger entered");
 		eventHandler.HandleClash ();
 	}
